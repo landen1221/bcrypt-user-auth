@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-4 text-center mt-2">
+        <h2>{{user.username}}</h2>       
+        {% if session['userID'] != user.username %}       
+        <a href="/users/{{user.username}}/feedback/add" class="btn btn-outline-info mt-3">Add Feedback</a>
+        {% endif %}
+    </div>
+    <div class="col-8 content-center text-center">
+
+    <div class="card w-75 ">
+        <div class="card-body">
+        <p class="card-text ml-3"><b>Name: </b> {{ user.first_name }} {{ user.last_name }}</p>
+        <p class="card-text ml-3"><b>Email: </b> {{ user.email }}</p>
+        <hr>
+    <div class="text-left">
+
+
+        <ul>
+            {% for feed in feedback %}
+                <li class="mb-2"><b>{{feed.title}}</b> <br>
+                    {{feed.content}}<br>
+                    <i>Created by: {{ session['userID'] }}</i>
+                    {% if session['userID'] == feed.feedback_from %}<br>
+                    <a href="/feedback/{{feed.id}}/update" class="btn btn-sm  btn-info">Edit</a>
+                    <a href="/feedback/{{feed.id}}/delete" class="btn btn-sm btn-danger">Delete</a>
+                </li><br><br>
+                {% endif %}
+            {% endfor %}
+        
+        </ul>
+
+
+
+    </div>
+    </div>
+    </div>
+    </div>
+</div>    
+</div>    
+
+
+{% endblock %}
